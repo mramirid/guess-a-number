@@ -1,11 +1,13 @@
 import React, { FC } from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { StatusBar } from "expo-status-bar";
+
+import Header from "./components/Header";
 
 const App: FC = () => (
   <View>
     <StatusBar style="light" />
-    <Text>Hello World</Text>
+    <Header title="Guess a Number" />
   </View>
 );
 
