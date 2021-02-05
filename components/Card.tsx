@@ -2,12 +2,16 @@ import React, { FC } from "react";
 import { View, StyleSheet, ViewStyle } from "react-native";
 
 interface CardProps {
-  style: ViewStyle;
+  style?: ViewStyle;
 }
 
-const Card: FC<CardProps> = (props) => (
-  <View style={{ ...styles.card, ...props.style }}>{props.children}</View>
-);
+const Card: FC<CardProps> = (props) => {
+  return (
+    <View style={{ ...styles.card, ...(props.style || {}) }}>
+      {props.children}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   card: {
