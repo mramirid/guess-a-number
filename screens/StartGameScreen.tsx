@@ -6,6 +6,7 @@ import {
   Button,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 
 import Colors from "../constants/colors";
@@ -14,10 +15,37 @@ import Input from "../components/Input";
 
 const StartGameScreen: FC = () => {
   const [enteredVal, setEnteredVal] = useState("");
+  const [inputConfirmed, setInputConfirmed] = useState(false);
+  const [selectedNumber, setSelectedNumber] = useState<number>(0);
 
-  const changeValue = (text: string) => {
+  const changeInputValue = (text: string) => {
     setEnteredVal(text.replace(/[^0-9]/g, ""));
   };
+
+  const resetInput = () => {
+    setInputConfirmed(false);
+    setEnteredVal("");
+  };
+
+  const confirmInput = () => {
+    const chosenNumber = parseInt(enteredVal);
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert(
+        "Invalid Input",
+        "Number has to be a number between 1 and 99",
+        [{ text: "OK", style: "destructive", onPress: resetInput }],
+      );
+      return;
+    }
+    setInputConfirmed(true);
+    setEnteredVal("");
+    setSelectedNumber(chosenNumber);
+  };
+
+  let confirmedContent: JSX.Element | null = null;
+  if (inputConfirmed) {
+    confirmedContent = <Text>Chosen number: {selectedNumber}</Text>;
+  }
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -32,7 +60,7 @@ const StartGameScreen: FC = () => {
             autoCorrect={false}
             keyboardType="number-pad"
             maxLength={2}
-            onChangeText={changeValue}
+            onChangeText={changeInputValue}
             value={enteredVal}
           />
           <View style={styles.buttonContainer}>
@@ -40,18 +68,19 @@ const StartGameScreen: FC = () => {
               <Button
                 title="RESET"
                 color={Colors.Accent}
-                onPress={() => null}
+                onPress={resetInput}
               />
             </View>
             <View style={styles.button}>
               <Button
                 title="CONFIRM"
                 color={Colors.Primary}
-                onPress={() => null}
+                onPress={confirmInput}
               />
             </View>
           </View>
         </Card>
+        {confirmedContent}
       </View>
     </TouchableWithoutFeedback>
   );
