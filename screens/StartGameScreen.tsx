@@ -2,18 +2,18 @@ import React, { FC, useCallback, useState } from "react";
 import {
   View,
   StyleSheet,
-  Text,
   Button,
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
 } from "react-native";
 
-import Fonts from "../constants/fonts";
 import Colors from "../constants/colors";
 import Card from "../components/Card";
 import Input from "../components/Input";
 import Number from "../components/Number";
+import BodyText from "../components/Text/BodyText";
+import HeadingText from "../components/Text/HeadingText";
 
 interface StartGameScreenProps {
   onStartGame(selectedNumber: number): void;
@@ -53,7 +53,7 @@ const StartGameScreen: FC<StartGameScreenProps> = (props) => {
   if (inputConfirmed && selectedNumber) {
     confirmedContent = (
       <Card style={styles.summaryContainer}>
-        <Text>You selected</Text>
+        <BodyText>You selected</BodyText>
         <Number>{selectedNumber}</Number>
         <Button
           title="START GAME"
@@ -67,11 +67,12 @@ const StartGameScreen: FC<StartGameScreenProps> = (props) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.screen}>
-        <Text style={styles.title}>Start a New Game!</Text>
+        <HeadingText style={styles.title}>Start a New Game!</HeadingText>
         <Card style={styles.inputContainer}>
-          <Text>Select a Number</Text>
+          <HeadingText style={styles.inputLabel}>Select a Number</HeadingText>
           <Input
             style={styles.input}
+            placeholder="XX"
             blurOnSubmit
             autoCapitalize="none"
             autoCorrect={false}
@@ -110,7 +111,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontFamily: Fonts.OpenSansBold,
     fontSize: 20,
     marginVertical: 10,
   },
@@ -118,6 +118,9 @@ const styles = StyleSheet.create({
     width: 300,
     maxWidth: "80%",
     alignItems: "center",
+  },
+  inputLabel: {
+    fontSize: 16,
   },
   input: {
     width: 50,

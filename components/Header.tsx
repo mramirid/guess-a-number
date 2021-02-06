@@ -2,6 +2,7 @@ import React, { FC, memo } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import Colors from "../constants/colors";
+import Fonts from "../constants/fonts";
 
 interface HeaderProps {
   title: string;
@@ -24,6 +25,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: "white",
+    fontFamily: Fonts.OpenSansBold,
     fontSize: 18,
   },
 });
