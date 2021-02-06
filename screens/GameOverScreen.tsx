@@ -17,7 +17,9 @@ const GameOverScreen: FC<GameOverScreenProps> = (props) => (
     <Image
       style={styles.image}
       resizeMode="cover"
-      source={require("../assets/success.png")}
+      source={{
+        uri: "https://www.stockvault.net/data/2017/10/30/240093/preview16.jpg",
+      }}
     />
     <BodyText>Number of moves: {props.guessCount}</BodyText>
     <BodyText>Number was: {props.selectedNumber}</BodyText>
