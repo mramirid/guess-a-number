@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -12,20 +12,25 @@ import {
 import Colors from "../constants/colors";
 import Card from "../components/Card";
 import Input from "../components/Input";
+import Number from "../components/Number";
 
-const StartGameScreen: FC = () => {
+interface StartGameScreenProps {
+  onStartGame(selectedNumber: number): void;
+}
+
+const StartGameScreen: FC<StartGameScreenProps> = (props) => {
   const [enteredVal, setEnteredVal] = useState("");
   const [inputConfirmed, setInputConfirmed] = useState(false);
-  const [selectedNumber, setSelectedNumber] = useState<number>(0);
+  const [selectedNumber, setSelectedNumber] = useState<number>();
 
-  const changeInputValue = (text: string) => {
+  const changeInputValue = useCallback((text: string) => {
     setEnteredVal(text.replace(/[^0-9]/g, ""));
-  };
+  }, []);
 
-  const resetInput = () => {
+  const resetInput = useCallback(() => {
     setInputConfirmed(false);
     setEnteredVal("");
-  };
+  }, []);
 
   const confirmInput = () => {
     const chosenNumber = parseInt(enteredVal);
@@ -38,13 +43,24 @@ const StartGameScreen: FC = () => {
       return;
     }
     setInputConfirmed(true);
-    setEnteredVal("");
     setSelectedNumber(chosenNumber);
+    setEnteredVal("");
+    Keyboard.dismiss();
   };
 
   let confirmedContent: JSX.Element | null = null;
-  if (inputConfirmed) {
-    confirmedContent = <Text>Chosen number: {selectedNumber}</Text>;
+  if (inputConfirmed && selectedNumber) {
+    confirmedContent = (
+      <Card style={styles.summaryContainer}>
+        <Text>You selected</Text>
+        <Number>{selectedNumber}</Number>
+        <Button
+          title="START GAME"
+          color={Colors.Primary}
+          onPress={() => props.onStartGame(selectedNumber)}
+        />
+      </Card>
+    );
   }
 
   return (
@@ -88,6 +104,7 @@ const StartGameScreen: FC = () => {
 
 const styles = StyleSheet.create({
   screen: {
+    flex: 1,
     padding: 10,
     alignItems: "center",
   },
@@ -109,9 +126,14 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "space-between",
     paddingHorizontal: 15,
+    marginTop: 10,
   },
   button: {
     width: "45%",
+  },
+  summaryContainer: {
+    marginTop: 20,
+    alignItems: "center",
   },
 });
 

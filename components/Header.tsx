@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import Colors from "../constants/colors";
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.Primary,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 25,
+    paddingTop: 20,
   },
   headerTitle: {
     color: "white",
@@ -28,4 +28,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Header;
+export default memo(Header);
