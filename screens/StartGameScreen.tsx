@@ -9,6 +9,7 @@ import {
   Alert,
 } from "react-native";
 
+import Fonts from "../constants/fonts";
 import Colors from "../constants/colors";
 import Card from "../components/Card";
 import Input from "../components/Input";
@@ -109,6 +110,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
+    fontFamily: Fonts.OpenSansBold,
     fontSize: 20,
     marginVertical: 10,
   },

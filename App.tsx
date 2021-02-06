@@ -1,7 +1,10 @@
 import React, { FC, useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import AppLoading from "expo-app-loading";
+import { useFonts } from "expo-font";
 
+import Fonts from "./constants/fonts";
 import Header from "./components/Header";
 import StartGameScreen from "./screens/StartGameScreen";
 import GamePlayScreen from "./screens/GamePlayScreen";
@@ -23,6 +26,15 @@ const App: FC = () => {
     setGuessCount(0);
     setSelectedNumber(null);
   }, []);
+
+  const [isFontsLoaded] = useFonts({
+    [Fonts.OpenSansRegular]: require("./assets/fonts/OpenSans-Regular.ttf"),
+    [Fonts.OpenSansBold]: require("./assets/fonts/OpenSans-Bold.ttf"),
+  });
+
+  if (!isFontsLoaded) {
+    return <AppLoading />;
+  }
 
   let displayedScreen = <StartGameScreen onStartGame={startGame} />;
   if (selectedNumber && guessCount <= 0) {
