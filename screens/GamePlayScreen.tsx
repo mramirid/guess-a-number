@@ -1,8 +1,10 @@
 import React, { FC, memo, useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Text, Button, Alert } from "react-native";
 
+import { fontStyles } from "../constants/fonts";
 import Number from "../components/Number";
 import Card from "../components/Card";
+import Colors from "../constants/colors";
 
 function getRandNumBetween(min: number, max: number, exclude: number): number {
   min = Math.ceil(min);
@@ -70,15 +72,19 @@ const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
 
   return (
     <View style={styles.screen}>
-      <Text>Opponent&apos;s Guess</Text>
-      <Number>{curGuess}</Number>
+      <Card style={styles.numberContainer}>
+        <Text style={fontStyles.heading}>Opponent&apos;s Guess</Text>
+        <Number>{curGuess}</Number>
+      </Card>
       <Card style={styles.buttonContainer}>
         <Button
           title={GuessDirection.LOWER}
+          color={Colors.Primary}
           onPress={() => nextGuess(GuessDirection.LOWER)}
         />
         <Button
           title={GuessDirection.GRATER}
+          color={Colors.Primary}
           onPress={() => nextGuess(GuessDirection.GRATER)}
         />
       </Card>
@@ -92,6 +98,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: "center",
   },
+  numberContainer: { alignItems: "center" },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
