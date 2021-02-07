@@ -1,4 +1,4 @@
-import React, { FC, memo } from "react";
+import React, { FC, memo, useEffect, useState } from "react";
 import { Text, StyleSheet, Image, Dimensions, ScrollView } from "react-native";
 
 import BodyText from "../components/Text/BodyText";
@@ -6,6 +6,7 @@ import HeadingText from "../components/Text/HeadingText";
 import MainButton from "../components/Button/MainButton";
 import Colors from "../constants/colors";
 import Fonts from "../constants/fonts";
+import { DimensionsScaledSizes } from "../types/dimensions";
 
 interface GameOverScreenProps {
   guessCount: number;
@@ -13,23 +14,50 @@ interface GameOverScreenProps {
   onNewGame(): void;
 }
 
-const GameOverScreen: FC<GameOverScreenProps> = (props) => (
-  <ScrollView contentContainerStyle={styles.screen}>
-    <HeadingText>The game is over!</HeadingText>
-    <Image
-      style={styles.image}
-      resizeMode="cover"
-      source={require("../assets/success.png")}
-    />
-    <BodyText style={styles.resultText}>
-      Your phone needed{" "}
-      <Text style={styles.highlightText}>{props.guessCount}</Text> moves to
-      guess the number{" "}
-      <Text style={styles.highlightText}>{props.selectedNumber}</Text>
-    </BodyText>
-    <MainButton onPress={props.onNewGame}>NEW GAME</MainButton>
-  </ScrollView>
-);
+const GameOverScreen: FC<GameOverScreenProps> = (props) => {
+  const [windowSizes, setWindowSizes] = useState({
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
+  });
+
+  useEffect(() => {
+    const updateScale = ({ window }: DimensionsScaledSizes) => {
+      setWindowSizes(window);
+    };
+    Dimensions.addEventListener("change", updateScale);
+    return () => Dimensions.removeEventListener("change", updateScale);
+  }, []);
+
+  return (
+    <ScrollView contentContainerStyle={styles.screen}>
+      <HeadingText>The game is over!</HeadingText>
+      <Image
+        resizeMode="cover"
+        source={require("../assets/success.png")}
+        style={{
+          width: windowSizes.width * 0.7,
+          height: windowSizes.width * 0.7,
+          borderRadius: (windowSizes.width * 0.7) / 2,
+          borderWidth: 3,
+          borderColor: "black",
+          marginVertical: windowSizes.height / 30,
+        }}
+      />
+      <BodyText
+        style={{
+          textAlign: "center",
+          fontSize: windowSizes.height < 400 ? 16 : 20,
+          marginVertical: windowSizes.height / 60,
+        }}>
+        Your phone needed{" "}
+        <Text style={styles.highlightText}>{props.guessCount}</Text> moves to
+        guess the number{" "}
+        <Text style={styles.highlightText}>{props.selectedNumber}</Text>
+      </BodyText>
+      <MainButton onPress={props.onNewGame}>NEW GAME</MainButton>
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
   screen: {
@@ -37,19 +65,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 20,
-  },
-  image: {
-    width: Dimensions.get("window").width * 0.7,
-    height: Dimensions.get("window").width * 0.7,
-    borderRadius: (Dimensions.get("window").width * 0.7) / 2,
-    borderWidth: 3,
-    borderColor: "black",
-    marginVertical: Dimensions.get("window").height / 30,
-  },
-  resultText: {
-    textAlign: "center",
-    fontSize: Dimensions.get("window").height < 400 ? 16 : 20,
-    marginVertical: Dimensions.get("window").height / 60,
   },
   highlightText: {
     color: Colors.Primary,

@@ -1,5 +1,5 @@
 import React, { FC, memo } from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 import Colors from "../constants/colors";
 import Fonts from "../constants/fonts";
@@ -17,7 +17,7 @@ const Header: FC<HeaderProps> = (props) => (
 const styles = StyleSheet.create({
   header: {
     width: "100%",
-    height: Dimensions.get("window").height * 0.14,
+    height: 80,
     backgroundColor: Colors.Primary,
     alignItems: "center",
     justifyContent: "center",
