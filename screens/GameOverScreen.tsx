@@ -1,5 +1,5 @@
 import React, { FC, memo } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { Text, StyleSheet, Image, Dimensions, ScrollView } from "react-native";
 
 import BodyText from "../components/Text/BodyText";
 import HeadingText from "../components/Text/HeadingText";
@@ -14,7 +14,7 @@ interface GameOverScreenProps {
 }
 
 const GameOverScreen: FC<GameOverScreenProps> = (props) => (
-  <View style={styles.screen}>
+  <ScrollView contentContainerStyle={styles.screen}>
     <HeadingText>The game is over!</HeadingText>
     <Image
       style={styles.image}
@@ -28,7 +28,7 @@ const GameOverScreen: FC<GameOverScreenProps> = (props) => (
       <Text style={styles.highlightText}>{props.selectedNumber}</Text>
     </BodyText>
     <MainButton onPress={props.onNewGame}>NEW GAME</MainButton>
-  </View>
+  </ScrollView>
 );
 
 const styles = StyleSheet.create({
@@ -36,21 +36,20 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 20,
+    paddingHorizontal: 20,
   },
   image: {
-    width: 300,
-    height: 300,
-    borderRadius: 150,
+    width: Dimensions.get("window").width * 0.7,
+    height: Dimensions.get("window").width * 0.7,
+    borderRadius: (Dimensions.get("window").width * 0.7) / 2,
     borderWidth: 3,
     borderColor: "black",
-    marginTop: 30,
-    marginBottom: 15,
+    marginVertical: Dimensions.get("window").height / 30,
   },
   resultText: {
     textAlign: "center",
-    fontSize: 20,
-    marginVertical: 15,
+    fontSize: Dimensions.get("window").height < 400 ? 16 : 20,
+    marginVertical: Dimensions.get("window").height / 60,
   },
   highlightText: {
     color: Colors.Primary,

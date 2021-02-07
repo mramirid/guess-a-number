@@ -104,10 +104,13 @@ const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    padding: 10,
+    paddingHorizontal: 10,
     alignItems: "center",
   },
-  numberContainer: { alignItems: "center" },
+  numberContainer: {
+    marginTop: 10,
+    alignItems: "center",
+  },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
@@ -116,7 +119,7 @@ const styles = StyleSheet.create({
     maxWidth: "90%",
   },
   passGuessesContainer: {
-    width: "60%",
+    width: "90%",
   },
   list: {
     justifyContent: "flex-end",
