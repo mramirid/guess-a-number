@@ -85,7 +85,9 @@ const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
           <MaterialIcons name="add" size={24} color="white" />
         </MainButton>
       </Card>
-      <ScrollView style={styles.list}>
+      <ScrollView
+        style={styles.passGuessesContainer}
+        contentContainerStyle={styles.list}>
         {pastGuesses.map((guess, i) => (
           <View style={styles.listItem} key={guess}>
             <BodyText>#{pastGuesses.length - i}</BodyText>
@@ -111,8 +113,12 @@ const styles = StyleSheet.create({
     width: 400,
     maxWidth: "90%",
   },
-  list: {
+  passGuessesContainer: {
     width: "80%",
+  },
+  list: {
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
   listItem: {
     borderWidth: 1,
@@ -122,6 +128,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flexDirection: "row",
     justifyContent: "space-between",
+    width: "60%",
   },
 });
 
