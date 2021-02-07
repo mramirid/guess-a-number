@@ -1,11 +1,12 @@
 import React, { FC, memo, useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Text, Alert } from "react-native";
+import { View, StyleSheet, Text, Alert, ScrollView } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 import { fontStyles } from "../constants/fonts";
 import Number from "../components/Number";
 import Card from "../components/Card";
 import MainButton from "../components/Button/MainButton";
+import BodyText from "../components/Text/BodyText";
 
 function getRandNumBetween(min: number, max: number, exclude: number): number {
   min = Math.ceil(min);
@@ -28,18 +29,17 @@ interface GamePlayScreenProps {
 }
 
 const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
-  const [guessCount, setGuessCount] = useState(0);
-  const [curGuess, setCurGuess] = useState(
-    getRandNumBetween(1, 99, props.selectedNumber),
-  );
+  const initialGuess = getRandNumBetween(1, 99, props.selectedNumber);
   const currentLow = useRef(1);
   const currentHigh = useRef(99);
+  const [curGuess, setCurGuess] = useState(initialGuess);
+  const [pastGuesses, setPastGuesses] = useState([initialGuess]);
 
   useEffect(() => {
     if (curGuess === props.selectedNumber) {
-      props.onGameOver(guessCount);
+      props.onGameOver(pastGuesses.length);
     }
-  }, [curGuess, guessCount, props]);
+  }, [curGuess, pastGuesses.length, props]);
 
   const nextGuess = (direction: GuessDirection) => {
     if (
@@ -47,7 +47,7 @@ const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
       (direction === GuessDirection.GRATER && curGuess > props.selectedNumber)
     ) {
       Alert.alert(
-        "Invalid Hint",
+        "Don't lie",
         "Be honest, you know that the hint is wrong 🙂",
         [{ text: "SORRY", style: "cancel" }],
       );
@@ -59,7 +59,7 @@ const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
         currentHigh.current = curGuess;
         break;
       case GuessDirection.GRATER:
-        currentLow.current = curGuess;
+        currentLow.current = curGuess + 1;
         break;
     }
     const nextGuess = getRandNumBetween(
@@ -68,7 +68,7 @@ const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
       curGuess,
     );
     setCurGuess(nextGuess);
-    setGuessCount((guessCount) => guessCount + 1);
+    setPastGuesses((pastGuesses) => [nextGuess, ...pastGuesses]);
   };
 
   return (
@@ -85,6 +85,14 @@ const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
           <MaterialIcons name="add" size={24} color="white" />
         </MainButton>
       </Card>
+      <ScrollView style={styles.list}>
+        {pastGuesses.map((guess, i) => (
+          <View style={styles.listItem} key={guess}>
+            <BodyText>#{pastGuesses.length - i}</BodyText>
+            <BodyText>{guess}</BodyText>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 };
@@ -102,6 +110,18 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: 400,
     maxWidth: "90%",
+  },
+  list: {
+    width: "80%",
+  },
+  listItem: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: "white",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
 
