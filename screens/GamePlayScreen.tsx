@@ -1,5 +1,6 @@
 import React, { FC, memo, useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Text, Alert } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import { fontStyles } from "../constants/fonts";
 import Number from "../components/Number";
@@ -78,10 +79,10 @@ const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
       </Card>
       <Card style={styles.buttonContainer}>
         <MainButton onPress={() => nextGuess(GuessDirection.LOWER)}>
-          {GuessDirection.LOWER}
+          <MaterialIcons name="remove" size={24} color="white" />
         </MainButton>
         <MainButton onPress={() => nextGuess(GuessDirection.GRATER)}>
-          {GuessDirection.GRATER}
+          <MaterialIcons name="add" size={24} color="white" />
         </MainButton>
       </Card>
     </View>
