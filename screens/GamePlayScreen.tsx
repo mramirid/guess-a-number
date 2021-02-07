@@ -1,5 +1,5 @@
 import React, { FC, memo, useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Text, Alert, ScrollView } from "react-native";
+import { View, StyleSheet, Text, Alert, FlatList } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 import { fontStyles } from "../constants/fonts";
@@ -85,16 +85,18 @@ const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
           <MaterialIcons name="add" size={24} color="white" />
         </MainButton>
       </Card>
-      <ScrollView
+      <FlatList
         style={styles.passGuessesContainer}
-        contentContainerStyle={styles.list}>
-        {pastGuesses.map((guess, i) => (
-          <View style={styles.listItem} key={guess}>
-            <BodyText>#{pastGuesses.length - i}</BodyText>
-            <BodyText>{guess}</BodyText>
+        contentContainerStyle={styles.list}
+        data={pastGuesses}
+        keyExtractor={(item) => item.toString()}
+        renderItem={(data) => (
+          <View style={styles.listItem}>
+            <BodyText>#{pastGuesses.length - data.index}</BodyText>
+            <BodyText>{data.item}</BodyText>
           </View>
-        ))}
-      </ScrollView>
+        )}
+      />
     </View>
   );
 };
@@ -109,15 +111,14 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginTop: 20,
+    marginVertical: 20,
     width: 400,
     maxWidth: "90%",
   },
   passGuessesContainer: {
-    width: "80%",
+    width: "60%",
   },
   list: {
-    alignItems: "center",
     justifyContent: "flex-end",
   },
   listItem: {
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "60%",
+    width: "100%",
   },
 });
 
