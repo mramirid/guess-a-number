@@ -1,12 +1,12 @@
-import React, { FC, memo, useEffect, useState } from "react";
-import { Text, StyleSheet, Image, Dimensions, ScrollView } from "react-native";
+import React, { FC, memo } from "react";
+import { Text, StyleSheet, Image, ScrollView } from "react-native";
 
 import BodyText from "../components/Text/BodyText";
 import HeadingText from "../components/Text/HeadingText";
 import MainButton from "../components/Button/MainButton";
 import Colors from "../constants/colors";
 import Fonts from "../constants/fonts";
-import { DimensionsScaledSizes } from "../types/dimensions";
+import useReactiveDimension from "../hooks/useReactiveDimension";
 
 interface GameOverScreenProps {
   guessCount: number;
@@ -15,19 +15,7 @@ interface GameOverScreenProps {
 }
 
 const GameOverScreen: FC<GameOverScreenProps> = (props) => {
-  const [windowSizes, setWindowSizes] = useState({
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
-  });
-
-  useEffect(() => {
-    const updateScale = ({ window }: DimensionsScaledSizes) => {
-      setWindowSizes(window);
-    };
-    Dimensions.addEventListener("change", updateScale);
-    return () => Dimensions.removeEventListener("change", updateScale);
-  }, []);
-
+  const windowSizes = useReactiveDimension("window");
   return (
     <ScrollView contentContainerStyle={styles.screen}>
       <HeadingText>The game is over!</HeadingText>

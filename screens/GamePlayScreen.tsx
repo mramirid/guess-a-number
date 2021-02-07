@@ -7,6 +7,7 @@ import Number from "../components/Number";
 import Card from "../components/Card";
 import MainButton from "../components/Button/MainButton";
 import BodyText from "../components/Text/BodyText";
+import useReactiveDimension from "../hooks/useReactiveDimension";
 
 function getRandNumBetween(min: number, max: number, exclude: number): number {
   min = Math.ceil(min);
@@ -29,6 +30,8 @@ interface GamePlayScreenProps {
 }
 
 const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
+  const windowSizes = useReactiveDimension("window");
+
   const initialGuess = getRandNumBetween(1, 99, props.selectedNumber);
   const currentLow = useRef(1);
   const currentHigh = useRef(99);
@@ -71,6 +74,35 @@ const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
     setPastGuesses((pastGuesses) => [nextGuess, ...pastGuesses]);
   };
 
+  if (windowSizes.height < 500) {
+    return (
+      <View style={styles.screen}>
+        <Text style={fontStyles.heading}>Opponent&apos;s Guess</Text>
+        <View style={styles.numberAndControlsContainer}>
+          <MainButton onPress={() => nextGuess(GuessDirection.LOWER)}>
+            <MaterialIcons name="remove" size={24} color="white" />
+          </MainButton>
+          <Number>{curGuess}</Number>
+          <MainButton onPress={() => nextGuess(GuessDirection.GRATER)}>
+            <MaterialIcons name="add" size={24} color="white" />
+          </MainButton>
+        </View>
+        <FlatList
+          style={styles.passGuessesContainer}
+          contentContainerStyle={styles.list}
+          data={pastGuesses}
+          keyExtractor={(item) => item.toString()}
+          renderItem={(data) => (
+            <View style={styles.listItem}>
+              <BodyText>#{pastGuesses.length - data.index}</BodyText>
+              <BodyText>{data.item}</BodyText>
+            </View>
+          )}
+        />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.screen}>
       <Card style={styles.numberContainer}>
@@ -104,12 +136,19 @@ const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    paddingTop: 10,
     paddingHorizontal: 10,
     alignItems: "center",
   },
   numberContainer: {
     marginTop: 10,
     alignItems: "center",
+  },
+  numberAndControlsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    width: "80%",
   },
   buttonContainer: {
     flexDirection: "row",
