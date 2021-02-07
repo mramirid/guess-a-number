@@ -48,7 +48,7 @@ const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
     ) {
       Alert.alert(
         "Don't lie",
-        "Be honest, you know that the hint is wrong 🙂",
+        "Be honest, you know that the hint is wrong...",
         [{ text: "SORRY", style: "cancel" }],
       );
       return;
