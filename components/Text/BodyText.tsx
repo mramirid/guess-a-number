@@ -1,10 +1,10 @@
 import React, { FC } from "react";
-import { Text, StyleSheet, ViewStyle } from "react-native";
+import { Text, StyleSheet, TextStyle } from "react-native";
 
 import Fonts from "../../constants/fonts";
 
 interface BodyTextProps {
-  style?: ViewStyle;
+  style?: TextStyle;
 }
 
 const BodyText: FC<BodyTextProps> = (props) => (

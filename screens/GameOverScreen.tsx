@@ -1,9 +1,10 @@
 import React, { FC, memo } from "react";
-import { View, StyleSheet, Button, Image } from "react-native";
+import { View, Text, StyleSheet, Button, Image } from "react-native";
 
 import BodyText from "../components/Text/BodyText";
 import HeadingText from "../components/Text/HeadingText";
 import Colors from "../constants/colors";
+import Fonts from "../constants/fonts";
 
 interface GameOverScreenProps {
   guessCount: number;
@@ -17,12 +18,14 @@ const GameOverScreen: FC<GameOverScreenProps> = (props) => (
     <Image
       style={styles.image}
       resizeMode="cover"
-      source={{
-        uri: "https://www.stockvault.net/data/2017/10/30/240093/preview16.jpg",
-      }}
+      source={require("../assets/success.png")}
     />
-    <BodyText>Number of moves: {props.guessCount}</BodyText>
-    <BodyText>Number was: {props.selectedNumber}</BodyText>
+    <BodyText style={styles.resultText}>
+      Your phone needed{" "}
+      <Text style={styles.highlightText}>{props.guessCount}</Text> moves to
+      guess the number{" "}
+      <Text style={styles.highlightText}>{props.selectedNumber}</Text>
+    </BodyText>
     <Button title="NEW GAME" color={Colors.Primary} onPress={props.onNewGame} />
   </View>
 );
@@ -32,6 +35,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    marginHorizontal: 20,
   },
   image: {
     width: 300,
@@ -39,7 +43,17 @@ const styles = StyleSheet.create({
     borderRadius: 150,
     borderWidth: 3,
     borderColor: "black",
-    marginVertical: 30,
+    marginTop: 30,
+    marginBottom: 15,
+  },
+  resultText: {
+    textAlign: "center",
+    fontSize: 20,
+    marginVertical: 15,
+  },
+  highlightText: {
+    color: Colors.Primary,
+    fontFamily: Fonts.OpenSansBold,
   },
 });
 
