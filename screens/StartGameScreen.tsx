@@ -14,6 +14,7 @@ import Input from "../components/Input";
 import Number from "../components/Number";
 import BodyText from "../components/Text/BodyText";
 import HeadingText from "../components/Text/HeadingText";
+import MainButton from "../components/Button/MainButton";
 
 interface StartGameScreenProps {
   onStartGame(selectedNumber: number): void;
@@ -55,11 +56,9 @@ const StartGameScreen: FC<StartGameScreenProps> = (props) => {
       <Card style={styles.summaryContainer}>
         <BodyText>You selected</BodyText>
         <Number>{selectedNumber}</Number>
-        <Button
-          title="START GAME"
-          color={Colors.Primary}
-          onPress={() => props.onStartGame(selectedNumber)}
-        />
+        <MainButton onPress={() => props.onStartGame(selectedNumber)}>
+          START GAME
+        </MainButton>
       </Card>
     );
   }

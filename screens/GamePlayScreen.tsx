@@ -1,10 +1,10 @@
 import React, { FC, memo, useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Text, Button, Alert } from "react-native";
+import { View, StyleSheet, Text, Alert } from "react-native";
 
 import { fontStyles } from "../constants/fonts";
 import Number from "../components/Number";
 import Card from "../components/Card";
-import Colors from "../constants/colors";
+import MainButton from "../components/Button/MainButton";
 
 function getRandNumBetween(min: number, max: number, exclude: number): number {
   min = Math.ceil(min);
@@ -77,16 +77,12 @@ const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
         <Number>{curGuess}</Number>
       </Card>
       <Card style={styles.buttonContainer}>
-        <Button
-          title={GuessDirection.LOWER}
-          color={Colors.Primary}
-          onPress={() => nextGuess(GuessDirection.LOWER)}
-        />
-        <Button
-          title={GuessDirection.GRATER}
-          color={Colors.Primary}
-          onPress={() => nextGuess(GuessDirection.GRATER)}
-        />
+        <MainButton onPress={() => nextGuess(GuessDirection.LOWER)}>
+          {GuessDirection.LOWER}
+        </MainButton>
+        <MainButton onPress={() => nextGuess(GuessDirection.GRATER)}>
+          {GuessDirection.GRATER}
+        </MainButton>
       </Card>
     </View>
   );
@@ -103,8 +99,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     marginTop: 20,
-    width: 300,
-    maxWidth: "80%",
+    width: 400,
+    maxWidth: "90%",
   },
 });
 

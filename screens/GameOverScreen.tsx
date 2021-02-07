@@ -1,8 +1,9 @@
 import React, { FC, memo } from "react";
-import { View, Text, StyleSheet, Button, Image } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 
 import BodyText from "../components/Text/BodyText";
 import HeadingText from "../components/Text/HeadingText";
+import MainButton from "../components/Button/MainButton";
 import Colors from "../constants/colors";
 import Fonts from "../constants/fonts";
 
@@ -26,7 +27,7 @@ const GameOverScreen: FC<GameOverScreenProps> = (props) => (
       guess the number{" "}
       <Text style={styles.highlightText}>{props.selectedNumber}</Text>
     </BodyText>
-    <Button title="NEW GAME" color={Colors.Primary} onPress={props.onNewGame} />
+    <MainButton onPress={props.onNewGame}>NEW GAME</MainButton>
   </View>
 );
 
