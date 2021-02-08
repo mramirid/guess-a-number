@@ -6,7 +6,7 @@ import HeadingText from "../components/Text/HeadingText";
 import MainButton from "../components/Button/MainButton";
 import Colors from "../constants/colors";
 import Fonts from "../constants/fonts";
-import useReactiveDimension from "../hooks/useReactiveDimension";
+import useReactiveDimensions from "../hooks/useReactiveDimensions";
 
 interface GameOverScreenProps {
   guessCount: number;
@@ -15,27 +15,28 @@ interface GameOverScreenProps {
 }
 
 const GameOverScreen: FC<GameOverScreenProps> = (props) => {
-  const windowSizes = useReactiveDimension("window");
+  const dimensions = useReactiveDimensions();
   return (
-    <ScrollView contentContainerStyle={styles.screen}>
+    <ScrollView
+      style={styles.screen}
+      contentContainerStyle={styles.resultContainer}>
       <HeadingText>The game is over!</HeadingText>
       <Image
         resizeMode="cover"
         source={require("../assets/success.png")}
         style={{
-          width: windowSizes.width * 0.7,
-          height: windowSizes.width * 0.7,
-          borderRadius: (windowSizes.width * 0.7) / 2,
-          borderWidth: 3,
-          borderColor: "black",
-          marginVertical: windowSizes.height / 30,
+          ...styles.image,
+          width: dimensions.window.width * 0.7,
+          height: dimensions.window.width * 0.7,
+          borderRadius: (dimensions.window.width * 0.7) / 2,
+          marginVertical: dimensions.window.height / 30,
         }}
       />
       <BodyText
         style={{
-          textAlign: "center",
-          fontSize: windowSizes.height < 400 ? 16 : 20,
-          marginVertical: windowSizes.height / 60,
+          ...styles.resultText,
+          fontSize: dimensions.window.height < 400 ? 16 : 20,
+          marginVertical: dimensions.window.height / 60,
         }}>
         Your phone needed{" "}
         <Text style={styles.highlightText}>{props.guessCount}</Text> moves to
@@ -50,9 +51,18 @@ const GameOverScreen: FC<GameOverScreenProps> = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+  },
+  resultContainer: {
+    padding: 20,
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 20,
+  },
+  image: {
+    borderWidth: 3,
+    borderColor: "black",
+  },
+  resultText: {
+    textAlign: "center",
   },
   highlightText: {
     color: Colors.Primary,

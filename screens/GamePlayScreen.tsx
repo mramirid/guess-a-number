@@ -7,7 +7,7 @@ import Number from "../components/Number";
 import Card from "../components/Card";
 import MainButton from "../components/Button/MainButton";
 import BodyText from "../components/Text/BodyText";
-import useReactiveDimension from "../hooks/useReactiveDimension";
+import useReactiveDimensions from "../hooks/useReactiveDimensions";
 
 function getRandNumBetween(min: number, max: number, exclude: number): number {
   min = Math.ceil(min);
@@ -30,7 +30,7 @@ interface GamePlayScreenProps {
 }
 
 const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
-  const windowSizes = useReactiveDimension("window");
+  const dimensions = useReactiveDimensions();
 
   const initialGuess = getRandNumBetween(1, 99, props.selectedNumber);
   const currentLow = useRef(1);
@@ -74,7 +74,7 @@ const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
     setPastGuesses((pastGuesses) => [nextGuess, ...pastGuesses]);
   };
 
-  if (windowSizes.height < 500) {
+  if (dimensions.window.height < 500) {
     return (
       <View style={styles.screen}>
         <Text style={fontStyles.heading}>Opponent&apos;s Guess</Text>
