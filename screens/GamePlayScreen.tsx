@@ -1,6 +1,7 @@
 import React, { FC, memo, useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Text, Alert, FlatList } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import * as ScreenOrientation from "expo-screen-orientation";
 
 import { fontStyles } from "../constants/fonts";
 import Number from "../components/Number";
@@ -30,6 +31,8 @@ interface GamePlayScreenProps {
 }
 
 const GamePlayScreen: FC<GamePlayScreenProps> = (props) => {
+  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+
   const dimensions = useReactiveDimensions();
 
   const initialGuess = getRandNumBetween(1, 99, props.selectedNumber);
