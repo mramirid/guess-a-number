@@ -3,7 +3,7 @@ import { Text, StyleSheet, Image, ScrollView } from "react-native";
 
 import BodyText from "../components/Text/BodyText";
 import HeadingText from "../components/Text/HeadingText";
-import MainButton from "../components/Button/MainButton";
+import MainButton from "../components/MainButton";
 import Colors from "../constants/colors";
 import Fonts from "../constants/fonts";
 import useReactiveDimensions from "../hooks/useReactiveDimensions";

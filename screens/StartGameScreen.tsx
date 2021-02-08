@@ -16,7 +16,7 @@ import Input from "../components/Input";
 import Number from "../components/Number";
 import BodyText from "../components/Text/BodyText";
 import HeadingText from "../components/Text/HeadingText";
-import MainButton from "../components/Button/MainButton";
+import MainButton from "../components/MainButton";
 
 interface StartGameScreenProps {
   onStartGame(selectedNumber: number): void;

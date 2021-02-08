@@ -3,20 +3,14 @@ import {
   View,
   Text,
   StyleSheet,
-  GestureResponderEvent,
-  ViewStyle,
-  Platform,
   TouchableNativeFeedback,
+  Platform,
   TouchableOpacity,
 } from "react-native";
 
+import { MainButtonProps } from "./types";
 import Colors from "../../constants/colors";
 import Fonts from "../../constants/fonts";
-
-interface MainButtonProps {
-  style?: ViewStyle;
-  onPress(event: GestureResponderEvent): void;
-}
 
 const MainButton: FC<MainButtonProps> = (props) => {
   const buttonContent = (
@@ -25,20 +19,22 @@ const MainButton: FC<MainButtonProps> = (props) => {
     </View>
   );
 
-  if (Platform.OS === "android" && Platform.Version >= 21) {
+  if (Platform.Version >= 21) {
     return (
       <View style={styles.buttonAndroidContainer}>
-        <TouchableNativeFeedback onPress={props.onPress}>
+        <TouchableOpacity onPress={props.onPress}>
           {buttonContent}
-        </TouchableNativeFeedback>
+        </TouchableOpacity>
       </View>
     );
   }
 
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={props.onPress}>
-      {buttonContent}
-    </TouchableOpacity>
+    <View style={styles.buttonAndroidContainer}>
+      <TouchableNativeFeedback onPress={props.onPress}>
+        {buttonContent}
+      </TouchableNativeFeedback>
+    </View>
   );
 };
 
