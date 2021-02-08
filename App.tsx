@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
@@ -52,11 +52,11 @@ const App: FC = () => {
   }
 
   return (
-    <View style={styles.appScreen}>
+    <SafeAreaView style={styles.appScreen}>
       <StatusBar style="light" />
       <Header title="Guess a Number" />
       {displayedScreen}
-    </View>
+    </SafeAreaView>
   );
 };
 
