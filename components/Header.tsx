@@ -9,22 +9,36 @@ interface HeaderProps {
 }
 
 const Header: FC<HeaderProps> = (props) => (
-  <View style={styles.header}>
+  <View
+    style={{
+      ...styles.headerBase,
+      ...Platform.select({
+        ios: styles.headerIOS,
+        android: styles.headerAndroid,
+      }),
+    }}>
     <Text style={styles.title}>{props.title}</Text>
   </View>
 );
 
 const styles = StyleSheet.create({
-  header: {
+  headerBase: {
     width: "100%",
     height: 80,
-    backgroundColor: Platform.OS === "android" ? Colors.Primary : "white",
-    borderBottomColor: Platform.OS === "ios" ? "#ccc" : "transparent",
-    borderBottomWidth: Platform.OS === "ios" ? 1 : 0,
     alignItems: "center",
     justifyContent: "center",
     paddingTop: 20,
     elevation: 6,
+  },
+  headerIOS: {
+    backgroundColor: "white",
+    borderBottomColor: "#ccc",
+    borderBottomWidth: 1,
+  },
+  headerAndroid: {
+    backgroundColor: Colors.Primary,
+    borderBottomColor: "transparent",
+    borderBottomWidth: 0,
   },
   title: {
     color: Platform.OS === "ios" ? Colors.Primary : "white",
