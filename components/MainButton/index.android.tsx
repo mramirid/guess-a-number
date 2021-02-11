@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, JSXElementConstructor } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,8 @@ import {
   TouchableNativeFeedback,
   Platform,
   TouchableOpacity,
+  TouchableOpacityProps,
+  TouchableNativeFeedbackProps,
 } from "react-native";
 
 import { MainButtonProps } from "./types";
@@ -13,27 +15,22 @@ import Colors from "../../constants/colors";
 import Fonts from "../../constants/fonts";
 
 const MainButton: FC<MainButtonProps> = (props) => {
-  const buttonContent = (
-    <View style={{ ...styles.buttonContent, ...(props.style || {}) }}>
-      <Text style={styles.buttonText}>{props.children}</Text>
-    </View>
-  );
-
+  let Touchable: JSXElementConstructor<
+    TouchableOpacityProps | TouchableNativeFeedbackProps
+  >;
   if (Platform.Version >= 21) {
-    return (
-      <View style={styles.buttonAndroidContainer}>
-        <TouchableOpacity onPress={props.onPress}>
-          {buttonContent}
-        </TouchableOpacity>
-      </View>
-    );
+    Touchable = TouchableNativeFeedback;
+  } else {
+    Touchable = TouchableOpacity;
   }
 
   return (
     <View style={styles.buttonAndroidContainer}>
-      <TouchableNativeFeedback onPress={props.onPress}>
-        {buttonContent}
-      </TouchableNativeFeedback>
+      <Touchable onPress={props.onPress}>
+        <View style={{ ...styles.buttonContent, ...(props.style || {}) }}>
+          <Text style={styles.buttonText}>{props.children}</Text>
+        </View>
+      </Touchable>
     </View>
   );
 };

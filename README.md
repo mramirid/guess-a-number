@@ -1,16 +1,9 @@
-# React Native App
+# Guess a Number
 
-A React Native starter template
+A simple game in which the app is trying to guess the given number
 
-## Configure lint-staged
+<br>
 
-Install and configure lint-staged first as follows:
-
-```bash
-npx mrm lint-staged
-```
-
-## References
-
-- Introduction to Expo - Expo Documentation. (n.d.). Retrieved February 2, 2021, from https://docs.expo.io/
-- Enforcing Consistent Code in Expo React Native Projects. (n.d.). Retrieved February 2, 2021, from https://justinnoel.dev/2020/07/20/enforcing-consistent-and-error-free-code-in-an-expo-react-native-project-with-typescript/
+<p align="center">
+  <img src="https://i.ibb.co/DC77Vmv/Screenshot-1613010151.png" alt="SS" height="450" border="0">
+</p>
