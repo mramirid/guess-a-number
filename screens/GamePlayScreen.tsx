@@ -5,7 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { fontStyles } from "../constants/fonts";
 import Number from "../components/Number";
 import Card from "../components/Card";
-import MainButton from "../components/MainButton";
+import MainButton from "../components/MainButton/MainButton";
 import BodyText from "../components/Text/BodyText";
 import useReactiveDimensions from "../hooks/useReactiveDimensions";
 

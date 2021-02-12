@@ -1,14 +1,14 @@
 import React, { FC } from "react";
-import { Text, StyleSheet, TextStyle } from "react-native";
+import { Text, StyleSheet, TextStyle, TextProps } from "react-native";
 
 import Fonts from "../../constants/fonts";
 
-interface BodyTextProps {
+interface BodyTextProps extends TextProps {
   style?: TextStyle;
 }
 
 const BodyText: FC<BodyTextProps> = (props) => (
-  <Text style={{ ...styles.text, ...(props.style || {}) }}>
+  <Text {...props} style={{ ...styles.text, ...(props.style || {}) }}>
     {props.children}
   </Text>
 );
